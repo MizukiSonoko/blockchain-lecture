@@ -16,6 +16,10 @@ python_version = "3.9"
 
 [scripts]
 hash_test = "python hash/app.py"
-p2p_dev = "python p2p/app.py"
-p2p_de = "python p2p/client.py"
+hash_sample = "python hash/sample.py"
+
+p2p_p1 = "python p2p/app.py localhost:50051"
+p2p_p2 = "python p2p/app.py localhost:50052"
+p2p_ignition = "python p2p/client.py"
+
 codegen = "python -m grpc_tools.protoc -I ./p2p/protos --python_out=./p2p/protos --grpc_python_out=./p2p/protos ./p2p/protos/message.proto"
