@@ -28,3 +28,11 @@ p2p_p2 = "python p2p/app.py localhost:50052"
 p2p_ignition = "python p2p/client.py"
 
 codegen = "python -m grpc_tools.protoc -I ./p2p/protos --python_out=./p2p/protos --grpc_python_out=./p2p/protos ./p2p/protos/message.proto"
+
+# ----- Add your codes ------
+
+# mizuki
+mizuki_hash   = "python mizuki_hash/app.py"
+mizuki_sigs   = "python mizuki_sigs/app.py"
+mizuki_p2p_p1 = "python mizuki_p2p/app.py localhost:50051"
+mizuki_p2p_p2 = "python mizuki_p2p/app.py localhost:50052"
