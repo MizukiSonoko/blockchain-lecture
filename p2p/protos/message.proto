@@ -14,7 +14,7 @@ message SimpleResp {
 }
 // ================================
 
-// Option update variables
+// Option: update variables
 // Note: https://developers.google.com/protocol-buffers/docs/pythontutorial
 // Note: https://developers.google.com/protocol-buffers/docs/reference/google.protobuf
 // Note: https://stackoverflow.com/questions/49161633/how-do-i-create-a-protobuf3-timestamp-in-python

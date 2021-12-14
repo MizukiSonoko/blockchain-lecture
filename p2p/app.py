@@ -26,7 +26,7 @@ class SimpleService(SampleServiceServicer):
     print("receive: {}, {}".format(req.text, req.count))
     # Option (Add sleep function!)
 
-    # **Task** add code to invoke PingPong of req.addr app
+    # Task1: add code to invoke PingPong of req.addr app
     # It needs count up
     return message_pb2.Pong(text="")
 

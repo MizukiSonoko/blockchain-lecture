@@ -21,11 +21,11 @@ key = restore_key_from_pem(key_pri_pem)
 pub_key_pem = generate_pub_pem(key)
 
 def sign(prikey, message):
-  # Task: Hash message
+  # Task1: Hash message
   hashed_message = None
-  # Task: Sign hashed_message using signer
+  # Task2: Sign hashed_message using signer
   signer = DSS.new(prikey, 'fips-186-3')
-  # Sign
+  # Task3: Sign
   signature = None
   return signature
 
@@ -35,11 +35,11 @@ signature = sign(key, message)
 pubKey = restore_key_from_pem(pub_key_pem)
 
 def verify(message, pub_key):
-  # Task Hash message
+  # Task4: Hash message
   hashed_message = None
   try:
       verifier = DSS.new(pubKey, 'fips-186-3')
-      # Task: Verify hashed_message using verifier
+      # Task5: Verify hashed_message using verifier
       print("Passed")
   except ValueError:
       print("Failed")
