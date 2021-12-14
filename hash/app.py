@@ -4,11 +4,11 @@
 import hashlib
 
 def hash_sha3_256(msg):
-  # Implement function using hashlib
+  # Task1. Implement function using hashlib
   return ''
 
 def hash_sha3_256_file(path): 
-  # Implement function using hashlib, open func
+  # Task2. Implement function using hashlib, open func
   return ''
 
 print(hash_sha3_256(b'hello from Bhutan')) # return '277e3e07d56684ec98cc2796b6f2127d36742d1de2c19deeba7ec4ebe04f788e'

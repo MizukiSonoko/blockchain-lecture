@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+protobuf = "*"
+grpcio-tools = "*"
+grpcio = "*"
+googleapis-common-protos = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
+
+[scripts]
+hash_test = "python hash/app.py"
+p2p_dev = "python p2p/app.py"
+p2p_de = "python p2p/client.py"
+codegen = "python -m grpc_tools.protoc -I ./p2p/protos --python_out=./p2p/protos --grpc_python_out=./p2p/protos ./p2p/protos/message.proto"
