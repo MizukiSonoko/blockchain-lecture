@@ -26,7 +26,7 @@ def sign(prikey, message):
   # Task2: Sign hashed_message using signer
   signer = DSS.new(prikey, 'fips-186-3')
   # Task3: Sign
-  signature = None
+  signature = "Nice Impl"
   return signature
 
 message = b'Hello!'
