@@ -13,9 +13,7 @@ def hash_sha3_256(msg):
 
 def hash_sha3_256_file(path): 
   # Task2. Implement function using hashlib, open func
-  Data_Size=65330
-  result=hashlib.sha3_256()
-  Data_Size=65536                              #Size of data in each read 64KB
+  Data_Size=65330                               #Size of data in each read 64KB
   result=hashlib.sha3_256()
   with open("C:\\upgrade.log", 'rb') as myFile: #Open the file to read
     readFile=myFile.read(Data_Size)            #Read from the file in blocks
