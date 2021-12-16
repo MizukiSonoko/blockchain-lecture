@@ -5,11 +5,25 @@ import hashlib
 
 def hash_sha3_256(msg):
   # Task1. Implement function using hashlib
-  return ''
+  # msg=(('hello from Bhutan').encode('utf-8'))
+  str ='hello from Bhutan'    # initialize the message as a string
+  result=hashlib.sha3_256()   #invoke the sha
+  result.update(msg)
+  return (result.hexdigest())
 
 def hash_sha3_256_file(path): 
   # Task2. Implement function using hashlib, open func
-  return ''
+  Data_Size=65330
+  result=hashlib.sha3_256()
+  Data_Size=65536                              #Size of data in each read 64KB
+  result=hashlib.sha3_256()
+  with open("C:\\upgrade.log", 'rb') as myFile: #Open the file to read
+    readFile=myFile.read(Data_Size)            #Read from the file in blocks
+    while len(readFile)>0:                     #check if there is still data in the file
+      result.update(readFile)                  #update the hash
+      readFile=myFile.read(Data_Size)          #continue reading the file until len is 0
+        
+  return (result.hexdigest())
 
 if __name__ == '__main__':
   print(hash_sha3_256(b'hello from Bhutan')) # return '277e3e07d56684ec98cc2796b6f2127d36742d1de2c19deeba7ec4ebe04f788e'
