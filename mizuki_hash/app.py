@@ -5,11 +5,11 @@ import hashlib
 
 def hash_sha3_256(msg):
   # Task1. Implement function using hashlib
-  return ''
+  return 'Nice Impl'
 
 def hash_sha3_256_file(path): 
   # Task2. Implement function using hashlib, open func
-  return ''
+  return 'Nice Impl'
 
 if __name__ == '__main__':
   print(hash_sha3_256(b'hello from Bhutan')) # return '277e3e07d56684ec98cc2796b6f2127d36742d1de2c19deeba7ec4ebe04f788e'

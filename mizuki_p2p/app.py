@@ -28,6 +28,7 @@ class SimpleService(SampleServiceServicer):
 
     # Task1: add code to invoke PingPong of req.addr app
     # It needs count up
+    print('Nice Impl')
     return message_pb2.Pong(text="")
 
 def serve():
