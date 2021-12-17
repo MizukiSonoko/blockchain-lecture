@@ -17,14 +17,21 @@ python_version = "3.9"
 [scripts]
 hello = "python sample.py"
 
-hash_test = "python hash/app.py"
+hash_test = "python mizuki_hash/app.py"
 hash_sample = "python hash/sample.py" # for mizuki (^_^)
 
 sigs = "python sigs/app.py"
 sigs_sample = "python sigs/sample.py" # for mizuki (^_^)
 
-p2p_p1 = "python p2p/app.py localhost:50051"
-p2p_p2 = "python p2p/app.py localhost:50052"
+p2p_p1 = "python p2p/sample.py localhost:50051"
+p2p_p2 = "python p2p/sample.py localhost:50052"
 p2p_ignition = "python p2p/client.py"
 
+pbft_p1 = "python pbft/sample.py localhost:50051 localhost:50051,localhost:50052,localhost:50053,localhost:50054"
+pbft_p2 = "python pbft/sample.py localhost:50052 localhost:50051,localhost:50052,localhost:50053,localhost:50054"
+pbft_p3 = "python pbft/sample.py localhost:50053 localhost:50051,localhost:50052,localhost:50053,localhost:50054"
+pbft_p4 = "python pbft/sample.py localhost:50054 localhost:50051,localhost:50052,localhost:50053,localhost:50054"
+pbft_ignition = "python pbft/ignition.py localhost:50051"
+
 codegen = "python -m grpc_tools.protoc -I ./p2p/protos --python_out=./p2p/protos --grpc_python_out=./p2p/protos ./p2p/protos/message.proto"
+codegen_pbft = "python -m grpc_tools.protoc -I ./pbft/protos --python_out=./pbft/protos --grpc_python_out=./pbft/protos ./pbft/protos/message.proto"

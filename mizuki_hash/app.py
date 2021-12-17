@@ -4,7 +4,7 @@
 import hashlib
 
 def hash_sha3_256(msg):
-  result = hashlib.sha3_256()
+  result = hashlib.sha3_512()
   result.update(msg) 
   return result.hexdigest()
 
