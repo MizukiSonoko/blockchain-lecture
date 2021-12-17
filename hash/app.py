@@ -5,6 +5,8 @@ import hashlib
 
 def hash_sha3_256(msg):
   # Task1. Implement function using hashlib
+  str1 = 'hello from Bhutan'
+  
   return ''
 
 def hash_sha3_256_file(path): 
