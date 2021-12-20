@@ -15,6 +15,8 @@ import hashlib
 import random
 import asyncio
 
+from pbft.protos.message_pb2 import Tx
+
 addr = ""
 addrs = []
 cache = []
@@ -51,6 +53,11 @@ def mining(txs):
   random.seed()
   while True:
     # Task mining!
+    nonce = ...
+    block = message_pb2.Block(txs=txs, nonce=nonce)
+    hash = Hash(block)
+    if hash is nice like a "0000024390ab2330903443" has five 0 on the top.:
+      return block
     count += 1
 
 class MockBlockchianService(MockBlockchainServiceServicer):
@@ -60,6 +67,9 @@ class MockBlockchianService(MockBlockchainServiceServicer):
 
   def ShareBlock(self, req, ctx):
     # Task minig. and if find nice nonce, commit it!
+    # req is block
+    block = mining(req.txs)
+    commitBlock(block)
     return message_pb2.ShareResp(text="")
 
   def CommitBlock(self, req, ctx):    
@@ -72,6 +82,12 @@ class MockBlockchianService(MockBlockchainServiceServicer):
     if len(cache) == 3:
       print("enough txs in cache, start broadcast")
       # Task: Make block and Broadcast it
+      # make block
+      block = message_pb2.Block(txs=txs, ....)
+      for a in addrs:
+        if a != addr:
+          sendBlock(a, block)
+
       cache = []
     
     return message_pb2.ShareResp(text="")
