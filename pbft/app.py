@@ -1,4 +1,3 @@
-
 from pbft.protos import message_pb2_grpc
 from pbft.protos import message_pb2
 from pbft.protos.message_pb2_grpc import SampleServiceServicer
