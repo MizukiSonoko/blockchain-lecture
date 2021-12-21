@@ -24,7 +24,7 @@ message ShareResp {
 
 service MockBlockchainService {
   rpc ShareBlock (Block) returns (stream ShareResp) {}
-  rpc CommitBlock (Block) returns (ShareResp) {}
+  rpc CommitBlock (Block) returns (stream ShareResp) {}
   rpc SendTx (Tx) returns (ShareResp) {}
 }
 

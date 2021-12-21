@@ -9,8 +9,8 @@ addr = ""
 def sendTx(addr, tx):
   with grpc.insecure_channel(addr) as channel:
     stub = message_pb2_grpc.MockBlockchainServiceStub(channel)
-    response = stub.SendTx(tx)
-    return response
+    resp = stub.SendTx(tx)
+    return resp
 
 tx = message_pb2.Tx(
   text="transfer",
