@@ -1,4 +1,5 @@
 
+from typing import Text
 from mock.protos import message_pb2_grpc
 from mock.protos import message_pb2
 from mock.protos.message_pb2_grpc import MockBlockchainServiceServicer
@@ -31,7 +32,7 @@ def hash_sha3_256(msg):
   return hashlib.sha3_256(msg).hexdigest()
 
 def get_number_of_0(hash):
-  arr = re.findall('^0+', hash)
+  arr = re.findall('^0+', hash) #re.findall returns non-overlapping matches of pattern in string
   if len(arr) == 0:
     return 0
   return len(arr[0])
@@ -44,14 +45,17 @@ def sendBlock(addr, block):
   with grpc.insecure_channel(addr) as channel:
     stub = message_pb2_grpc.MockBlockchainServiceStub(channel)
     response = stub.ShareBlock(block)
-  return response  
+    for r in response:
+          return r
+
 
 def mining(txs):
-  count = 0
-  random.seed()
-  while True:
-    # Task mining!
-    count += 1
+      global miningable
+      count = 0
+      random.seed()
+      while miningable:
+          # Task mining!
+        count += 1
 
 class MockBlockchianService(MockBlockchainServiceServicer):
 
@@ -60,8 +64,16 @@ class MockBlockchianService(MockBlockchainServiceServicer):
 
   def ShareBlock(self, req, ctx):
     # Task minig. and if find nice nonce, commit it!
-    return message_pb2.ShareResp(text="")
+    global miningable
+    yield message_pb2.ShareResp(Text="")
 
+    miningable =True
+    block = mining(req.txs)
+    if block:
+          print("Found!")
+          
+    else:
+          print("stop mining because other node has found the nonce")
   def CommitBlock(self, req, ctx):    
     block_chain.save(req)
 
