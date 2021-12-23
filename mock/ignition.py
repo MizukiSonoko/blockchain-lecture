@@ -52,9 +52,9 @@ def getChain():
     pass 
 
 
-def sendTx():
+def sendTx(ope):
   tx = message_pb2.Tx(
-    text="run some smart contract.",
+    text="run {}".format(ope),
     count=0,
     state = "req"
   )
@@ -69,4 +69,5 @@ if __name__ == '__main__':
   if cmd == "chain": 
     getChain()
   else:
-    sendTx()
+    ope = sys.argv[2]
+    sendTx(ope)
