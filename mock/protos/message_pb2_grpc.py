@@ -2,6 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 import message_pb2 as message__pb2
 
 
@@ -29,6 +30,11 @@ class MockBlockchainServiceStub(object):
                 request_serializer=message__pb2.Tx.SerializeToString,
                 response_deserializer=message__pb2.ShareResp.FromString,
                 )
+        self.GetBlockChain = channel.unary_unary(
+                '/mock.MockBlockchainService/GetBlockChain',
+                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                response_deserializer=message__pb2.BlockChain.FromString,
+                )
 
 
 class MockBlockchainServiceServicer(object):
@@ -52,6 +58,12 @@ class MockBlockchainServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetBlockChain(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_MockBlockchainServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -69,6 +81,11 @@ def add_MockBlockchainServiceServicer_to_server(servicer, server):
                     servicer.SendTx,
                     request_deserializer=message__pb2.Tx.FromString,
                     response_serializer=message__pb2.ShareResp.SerializeToString,
+            ),
+            'GetBlockChain': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetBlockChain,
+                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    response_serializer=message__pb2.BlockChain.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -128,5 +145,22 @@ class MockBlockchainService(object):
         return grpc.experimental.unary_unary(request, target, '/mock.MockBlockchainService/SendTx',
             message__pb2.Tx.SerializeToString,
             message__pb2.ShareResp.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetBlockChain(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/mock.MockBlockchainService/GetBlockChain',
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            message__pb2.BlockChain.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
