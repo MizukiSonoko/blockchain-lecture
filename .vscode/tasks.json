@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "pipenv",
+			"task": "bc_chain",
+			"problemMatcher": [],
+			"label": "pipenv: bc_chain",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}

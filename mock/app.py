@@ -1,7 +1,9 @@
+from .mock.protos import message_pb2_grpc
+from .mock.protos import message_pb2
+from .mock.protos.message_pb2_grpc import MockBlockchainServiceServicer
 
-from mock.protos import message_pb2_grpc
-from mock.protos import message_pb2
-from mock.protos.message_pb2_grpc import MockBlockchainServiceServicer
+#from mock.protos import message_pb2
+f#rom mock.protos.message_pb2_grpc import MockBlockchainServiceServicer
 from chain import Blockchain
 import grpc
 from concurrent import futures
@@ -41,7 +43,8 @@ def get_number_of_0(hash):
 
 
 def get_nonce():
-    return "{}".format(random.randint(0, sys.maxsize)).encode("utf-8")
+    nonce= "{}".format(random.randint(0, sys.maxsize)).encode("utf-8")
+    return nonce
 
 
 def commitBlock(addr, block):
@@ -60,38 +63,47 @@ def sendBlock(addr, block):
     return response
 
 
-def mining(txs):
-    global mineable
-    count = 0
-    random.seed()
+def mining(block,txs,previous_hash,zero_prefix):
     while mineable:
-        # Task mining!
-        nonce = get_nonce()
-        block = sendBlock()
-        hash = block.SerializeToString()
-        hashString = hashlib.sha256(
-            str(nonce + hash + block).encode().hexdigit)
-           # if top of hash is five zero. it's nice.
-        if hashString[:5] == '00000':
-            mineable = True
-            print("nonce: {}, hash: {},  number: {}".format(
-                  nonce, hash, get_number_of_0(hash)))
-        return block
-        if count % 100 == 0:
-           pass
-           print("count is {}, hash is {}, nonce is {}, number 0 is {}".format(count, hash, nonce, get_number_of_0(hash)))
-           count += 1
-    return None
-
+      nonce = get_nonce()
+      block_number=sendBlock()
+      block_hash=(str(nonce) + str(block_number),previous_hash)
+      new_block_hash=hashlib.sha3_256(block_hash).hexdigest()
+    
+      if get_number_of_0(new_block_hash)==5:
+        print("nonce: {}, new_block_hash: {},  block_number: {}".format(
+                  nonce, new_block_hash, get_number_of_0(hash)))
+        return new_block_hash    
+        
+    
 class MockBlockchianService(MockBlockchainServiceServicer):
 
     def __init__(self):
         pass
 
     def ShareBlock(self, req, ctx):
-        # Task minig. and if find nice nonce, commit it!
-        message_pb2.ShareResp = commitBlock()
+        global miningable
+        yield message_pb2.ShareResp(text="")
+
+        miningable = True
+        block = mining(req.txs)
+        if block:
+          print("find!")
+          resp = []
+          # Add implement, send commited block to other nodes.
+          # note. it requires Asynchronous. you should use ThreadPoolExecutor like this
+          # -------
+          executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+          resp.append(executor.submit(funcName(a, block)))
+          for r in resp:
+            r.result()
+          #  -------
+        else:
+            print("stop mining because other node find nonce")
+        
         return message_pb2.ShareResp(text="")
+
+
 
     def CommitBlock(self, req, ctx):
         block_chain.save(req)
@@ -103,7 +115,13 @@ class MockBlockchianService(MockBlockchainServiceServicer):
         if len(cache) == 3:
             print("enough txs in cache, start broadcast")
             # Task: Make block and Broadcast it
+            block = message_pb2.Block(txs = cache, nonce = "")
+            resp = []
             cache = []
+            executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+            resp.append(executor.submit(funcName(a, block)))
+            for r in resp:
+              r.result()
 
         return message_pb2.ShareResp(text="")
 
