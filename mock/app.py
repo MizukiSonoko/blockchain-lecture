@@ -84,7 +84,7 @@ def mining(txs):
     count += 1
   return None
 
-class MockBlockchianService(MockBlockchainServiceServicer):
+class MockBlockchainService(MockBlockchainServiceServicer):
 
   def __init__(self):
     pass
