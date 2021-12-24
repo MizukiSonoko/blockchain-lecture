@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 package mock;
 
 message Tx {
@@ -14,17 +16,24 @@ message Block {
   string nonce = 2;
   string hash = 3;
   string prev = 4;
-  int64 timestamp = 5;
+  int64  timestamp = 5;
   string state = 6;
+  string creator = 7;
 }
 
 message ShareResp {
   string text = 1;
 }
 
+
+message BlockChain {
+  repeated Block blocks = 1;
+}
+
 service MockBlockchainService {
   rpc ShareBlock (Block) returns (stream ShareResp) {}
-  rpc CommitBlock (Block) returns (ShareResp) {}
+  rpc CommitBlock (Block) returns (stream ShareResp) {}
   rpc SendTx (Tx) returns (ShareResp) {}
+  rpc GetBlockChain(google.protobuf.Empty) returns (BlockChain) {}
 }
 

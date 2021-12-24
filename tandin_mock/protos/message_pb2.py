@@ -11,6 +11,7 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -19,8 +20,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\rmessage.proto\x12\x04mock\"?\n\x02Tx\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\x05\x12\r\n\x05state\x18\x03 \x01(\t\x12\r\n\x05\x61\x64\x64rs\x18\x04 \x03(\t\"k\n\x05\x42lock\x12\x15\n\x03txs\x18\x01 \x03(\x0b\x32\x08.mock.Tx\x12\r\n\x05nonce\x18\x02 \x01(\t\x12\x0c\n\x04hash\x18\x03 \x01(\t\x12\x0c\n\x04prev\x18\x04 \x01(\t\x12\x11\n\ttimestamp\x18\x05 \x01(\x03\x12\r\n\x05state\x18\x06 \x01(\t\"\x19\n\tShareResp\x12\x0c\n\x04text\x18\x01 \x01(\t2\x9d\x01\n\x15MockBlockchainService\x12.\n\nShareBlock\x12\x0b.mock.Block\x1a\x0f.mock.ShareResp\"\x00\x30\x01\x12-\n\x0b\x43ommitBlock\x12\x0b.mock.Block\x1a\x0f.mock.ShareResp\"\x00\x12%\n\x06SendTx\x12\x08.mock.Tx\x1a\x0f.mock.ShareResp\"\x00\x62\x06proto3'
-)
+  serialized_pb=b'\n\rmessage.proto\x12\x04mock\x1a\x1bgoogle/protobuf/empty.proto\"?\n\x02Tx\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\x05\x12\r\n\x05state\x18\x03 \x01(\t\x12\r\n\x05\x61\x64\x64rs\x18\x04 \x03(\t\"|\n\x05\x42lock\x12\x15\n\x03txs\x18\x01 \x03(\x0b\x32\x08.mock.Tx\x12\r\n\x05nonce\x18\x02 \x01(\t\x12\x0c\n\x04hash\x18\x03 \x01(\t\x12\x0c\n\x04prev\x18\x04 \x01(\t\x12\x11\n\ttimestamp\x18\x05 \x01(\x03\x12\r\n\x05state\x18\x06 \x01(\t\x12\x0f\n\x07\x63reator\x18\x07 \x01(\t\"\x19\n\tShareResp\x12\x0c\n\x04text\x18\x01 \x01(\t\")\n\nBlockChain\x12\x1b\n\x06\x62locks\x18\x01 \x03(\x0b\x32\x0b.mock.Block2\xdc\x01\n\x15MockBlockchainService\x12.\n\nShareBlock\x12\x0b.mock.Block\x1a\x0f.mock.ShareResp\"\x00\x30\x01\x12/\n\x0b\x43ommitBlock\x12\x0b.mock.Block\x1a\x0f.mock.ShareResp\"\x00\x30\x01\x12%\n\x06SendTx\x12\x08.mock.Tx\x1a\x0f.mock.ShareResp\"\x00\x12;\n\rGetBlockChain\x12\x16.google.protobuf.Empty\x1a\x10.mock.BlockChain\"\x00\x62\x06proto3'
+  ,
+  dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,])
 
 
 
@@ -73,8 +75,8 @@ _TX = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23,
-  serialized_end=86,
+  serialized_start=52,
+  serialized_end=115,
 )
 
 
@@ -128,6 +130,13 @@ _BLOCK = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='creator', full_name='mock.Block.creator', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -140,8 +149,8 @@ _BLOCK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=88,
-  serialized_end=195,
+  serialized_start=117,
+  serialized_end=241,
 )
 
 
@@ -172,14 +181,48 @@ _SHARERESP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=197,
-  serialized_end=222,
+  serialized_start=243,
+  serialized_end=268,
+)
+
+
+_BLOCKCHAIN = _descriptor.Descriptor(
+  name='BlockChain',
+  full_name='mock.BlockChain',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='blocks', full_name='mock.BlockChain.blocks', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=270,
+  serialized_end=311,
 )
 
 _BLOCK.fields_by_name['txs'].message_type = _TX
+_BLOCKCHAIN.fields_by_name['blocks'].message_type = _BLOCK
 DESCRIPTOR.message_types_by_name['Tx'] = _TX
 DESCRIPTOR.message_types_by_name['Block'] = _BLOCK
 DESCRIPTOR.message_types_by_name['ShareResp'] = _SHARERESP
+DESCRIPTOR.message_types_by_name['BlockChain'] = _BLOCKCHAIN
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Tx = _reflection.GeneratedProtocolMessageType('Tx', (_message.Message,), {
@@ -203,6 +246,13 @@ ShareResp = _reflection.GeneratedProtocolMessageType('ShareResp', (_message.Mess
   })
 _sym_db.RegisterMessage(ShareResp)
 
+BlockChain = _reflection.GeneratedProtocolMessageType('BlockChain', (_message.Message,), {
+  'DESCRIPTOR' : _BLOCKCHAIN,
+  '__module__' : 'message_pb2'
+  # @@protoc_insertion_point(class_scope:mock.BlockChain)
+  })
+_sym_db.RegisterMessage(BlockChain)
+
 
 
 _MOCKBLOCKCHAINSERVICE = _descriptor.ServiceDescriptor(
@@ -212,8 +262,8 @@ _MOCKBLOCKCHAINSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=225,
-  serialized_end=382,
+  serialized_start=314,
+  serialized_end=534,
   methods=[
   _descriptor.MethodDescriptor(
     name='ShareBlock',
@@ -242,6 +292,16 @@ _MOCKBLOCKCHAINSERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_TX,
     output_type=_SHARERESP,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetBlockChain',
+    full_name='mock.MockBlockchainService.GetBlockChain',
+    index=3,
+    containing_service=None,
+    input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    output_type=_BLOCKCHAIN,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
