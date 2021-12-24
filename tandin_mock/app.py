@@ -15,29 +15,27 @@ import hashlib
 import random
 import asyncio
 
-addr = ""
-addrs = []
+addr = "" # the ip of the current node
+addrs = [] # the ip/address of other nodes.
 cache = []
 miningable = True
 
 block_chain = Blockchain()
 
-# Send Tx to other nodes
+# function to send tx (transition)
 def sendTx(addr, tx):
   with grpc.insecure_channel(addr) as channel:
     stub = message_pb2_grpc.SampleServiceStub(channel)
     responses = stub.Share(tx)
     return responses
 
-# Caluclate hash from arguments msg. msg is b'text'
+# Caluclate hash from arguments msg
 def hash_sha3_256(msg):
   return hashlib.sha3_256(msg).hexdigest()
 
-# Return number of '0' on the top of argumented hash.
-# When hash is '00000a964f8465d7deb738ae1c7c723f5ad690276c94a5ab88cd1c0d5a3205142', returns 5
-# When hash is 'a0000a964f8465d7deb738ae1c7c723f5ad690276c94a5ab88cd1c0d5a3205142', returns 0
+ # This function will return preceding zeros in the hash
 def get_number_of_0(hash):
-  arr = re.findall('^0+', hash)
+  arr = re.findall('^0+', hash) #re.findall will count regualr expression of zeros without any breakups.
   if len(arr) == 0:
     return 0
   return len(arr[0])
@@ -70,9 +68,9 @@ def mining(txs):
   random.seed()
   last = block_chain.top()
   last_block_hash= hash_sha3_256(last.SerializeToString())
-  while miningable:       
-    # Add your implements
-    nonce = get_nonce() # initialize nonce as random string 
+  while miningable:  
+    # initialize nonce, make a call to nounce () function.   
+    nonce = get_nonce()
     # initialize block contain txs and nonce
     block = message_pb2.Block(
       txs =txs,
@@ -80,15 +78,17 @@ def mining(txs):
       prev = last_block_hash,
       creator = addr
     )
-    hash = ... # calucate hash from `block.SerializeToString()`. block.SerializeToString() is serialized string
-    if ...: # if top of hash is five zero. it's nice.
+    # calucate hash from `block.SerializeToString()
+    hash = hash_sha3_256(block.SerializeToString())
+    # Check to if there are 5 preceding 0s in the hash. get_number_of_0() function will return number of preceding zeros.
+    if get_number_of_0(hash) == 5:
       print("nonce: {}, hash: {},  number: {}".format(nonce, hash, get_number_of_0(hash)))
       return block
 
     # This is only logs.
     if count % 100 == 0:
-      pass
-      #print("count is {}, hash is {}, nonce is {}, number 0 is {}".format(count, hash, nonce, get_number_of_0(hash)))
+      #pass
+      print("count is {}, hash is {}, nonce is {}, number 0 is {}".format(count, hash, nonce, get_number_of_0(hash)))
     count += 1
   return None
 
@@ -98,27 +98,21 @@ class MockBlockchianService(MockBlockchainServiceServicer):
     pass
 
   def ShareBlock(self, req, ctx):
-    # Pleaze ignore.
     global miningable
     yield message_pb2.ShareResp(text="")
-
     miningable = True
     block = mining(req.txs)
     if block:
-      print("find!")
+      print("FOUND!")
       resp = []
       # Add implement, send commited block to other nodes.
       # note. it requires Asynchronous. you should use ThreadPoolExecutor like this
-      # -------
-      # executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
-      # resp.append(executor.submit(funcName(a, block)))
-      # for r in resp:
-      #   r.result()
-      # -------
-      ...
-    else:
-      print("stop mining because other node find nonce")
-    
+      executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+      resp.append(executor.submit(commitBlock(addrs, block)))
+      for r in resp:
+         r.result()
+      else:
+          print("stop mining because other node has found nonce")
     return message_pb2.ShareResp(text="")
 
   def CommitBlock(self, req, ctx):
@@ -126,7 +120,7 @@ class MockBlockchianService(MockBlockchainServiceServicer):
     yield message_pb2.ShareResp(text="")
     miningable = False
     # Add implement, save block to blockchain
-    ...
+    Blockchain.save(req,ctx)
 
   def SendTx(self, req, ctx): 
     global cache
@@ -139,11 +133,10 @@ class MockBlockchianService(MockBlockchainServiceServicer):
       # Add implement, send un-commited block to other nodes.
       # note. it requires Asynchronous. you should use ThreadPoolExecutor like this
       # -------
-      # executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
-      # resp.append(executor.submit(funcName(a, block)))
-      # for r in resp:
-      #   r.result()
-      # -------
+      executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+      resp.append(executor.submit(sendBlock(addrs, block)))
+      for r in resp:
+         r.result()
       cache = []
     
     return message_pb2.ShareResp(text="")
