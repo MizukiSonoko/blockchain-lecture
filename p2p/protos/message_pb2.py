@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\rmessage.proto\x12\x03p2p\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x19\n\tSimpleReq\x12\x0c\n\x04text\x18\x01 \x01(\t\"\x1a\n\nSimpleResp\x12\x0c\n\x04text\x18\x01 \x01(\t\"Y\n\x04Ping\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\x05\x12\x0c\n\x04\x61\x64\x64r\x18\x03 \x01(\t\x12&\n\x02ts\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x14\n\x04Pong\x12\x0c\n\x04text\x18\x01 \x01(\t2_\n\rSampleService\x12*\n\x05Hello\x12\x0e.p2p.SimpleReq\x1a\x0f.p2p.SimpleResp\"\x00\x12\"\n\x08PingPong\x12\t.p2p.Ping\x1a\t.p2p.Pong\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\rmessage.proto\x12\x03p2p\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x19\n\tSimpleReq\x12\x0c\n\x04text\x18\x01 \x01(\t\"\x1a\n\nSimpleResp\x12\x0c\n\x04text\x18\x01 \x01(\t\"1\n\x04Ping\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\x05\x12\x0c\n\x04\x61\x64\x64r\x18\x03 \x01(\t\"\x14\n\x04Pong\x12\x0c\n\x04text\x18\x01 \x01(\t2_\n\rSampleService\x12*\n\x05Hello\x12\x0e.p2p.SimpleReq\x1a\x0f.p2p.SimpleResp\"\x00\x12\"\n\x08PingPong\x12\t.p2p.Ping\x1a\t.p2p.Pong\"\x00\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -121,13 +121,6 @@ _PING = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ts', full_name='p2p.Ping.ts', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -141,7 +134,7 @@ _PING = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=139,
-  serialized_end=228,
+  serialized_end=188,
 )
 
 
@@ -172,11 +165,10 @@ _PONG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=230,
-  serialized_end=250,
+  serialized_start=190,
+  serialized_end=210,
 )
 
-_PING.fields_by_name['ts'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 DESCRIPTOR.message_types_by_name['SimpleReq'] = _SIMPLEREQ
 DESCRIPTOR.message_types_by_name['SimpleResp'] = _SIMPLERESP
 DESCRIPTOR.message_types_by_name['Ping'] = _PING
@@ -220,8 +212,8 @@ _SAMPLESERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=252,
-  serialized_end=347,
+  serialized_start=212,
+  serialized_end=307,
   methods=[
   _descriptor.MethodDescriptor(
     name='Hello',
