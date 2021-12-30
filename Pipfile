@@ -27,15 +27,15 @@ p2p_p1 = "python p2p/app.py localhost:50051"
 p2p_p2 = "python p2p/app.py localhost:50052"
 p2p_ignition = "python p2p/client.py"
 
-bc_p1 = "python mock/app.py localhost:50051 localhost:50051,localhost:50052,localhost:50053,localhost:50054"
-bc_p2 = "python mock/app.py localhost:50052 localhost:50051,localhost:50052,localhost:50053,localhost:50054"
-bc_p3 = "python mock/app.py localhost:50053 localhost:50051,localhost:50052,localhost:50053,localhost:50054"
-bc_p4 = "python mock/app.py localhost:50054 localhost:50051,localhost:50052,localhost:50053,localhost:50054"
-bc_ignition = "python mock/ignition.py none"
-bc_chain = "python mock/ignition.py chain"
+bc_p1 = "python app.py localhost:50051 localhost:50051,localhost:50052,localhost:50053,localhost:50054"
+bc_p2 = "python app.py localhost:50052 localhost:50051,localhost:50052,localhost:50053,localhost:50054"
+bc_p3 = "python app.py localhost:50053 localhost:50051,localhost:50052,localhost:50053,localhost:50054"
+bc_p4 = "python app.py localhost:50054 localhost:50051,localhost:50052,localhost:50053,localhost:50054"
+bc_ignition = "python ignition.py none"
+bc_chain = "pythonignition.py chain"
 
 
 codegen = "python -m grpc_tools.protoc -I ./p2p/protos --python_out=./p2p/protos --grpc_python_out=./p2p/protos ./p2p/protos/message.proto"
-codegen_mock = "python -m grpc_tools.protoc -I ./mock/protos --python_out=./mock/protos --grpc_python_out=./mock/protos ./mock/protos/message.proto"
-mock = "python mock/app.py"
+codegen_mock = "python -m grpc_tools.protoc -I ./protos --python_out=./protos --grpc_python_out=./protos ./protos/message.proto"
+mock = "python app.py"
 
