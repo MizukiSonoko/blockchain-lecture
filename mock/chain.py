@@ -1,6 +1,6 @@
 
 
-from mock.protos import message_pb2
+from protos import message_pb2
 import hashlib
 
 class Blockchain:

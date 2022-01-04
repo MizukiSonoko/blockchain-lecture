@@ -159,7 +159,7 @@ class MockBlockchainService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mock.MockBlockchainService/GetBlockChain',
+        return grpc.experimental.unary_unary(request, target, '/MockBlockchainService/GetBlockChain',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             message__pb2.BlockChain.FromString,
             options, channel_credentials,
