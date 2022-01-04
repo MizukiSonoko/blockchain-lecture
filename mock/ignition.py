@@ -1,7 +1,7 @@
 
-from mock.protos import message_pb2_grpc
-from mock.protos import message_pb2
-from mock.protos.message_pb2_grpc import MockBlockchainServiceStub
+from protos import message_pb2_grpc
+from protos import message_pb2
+from protos.message_pb2_grpc import MockBlockchainServiceStub
 from google.protobuf import empty_pb2 
 import sys
 import grpc
