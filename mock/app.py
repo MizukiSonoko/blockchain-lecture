@@ -1,7 +1,7 @@
 
-from mock.protos import message_pb2_grpc
-from mock.protos import message_pb2
-from mock.protos.message_pb2_grpc import MockBlockchainServiceServicer
+from protos import message_pb2_grpc
+from protos import message_pb2
+from protos.message_pb2_grpc import MockBlockchainServiceServicer
 from chain import Blockchain
 import grpc
 from concurrent import futures
@@ -68,14 +68,26 @@ def mining(txs):
   global miningable
   count = 0
   random.seed()
+  previous_block=block_chain.top()
+  previous_block_hash=hash_sha3_256(previous_block.SerializeToString())
   while miningable: 
     # Add your implements
-    nonce = ... # initialize nonce as random string 
-    block = ... # initialize block contain txs and nocne
-    hash = ... # calucate hash from `block.SerializeToString()`. block.SerializeToString() is serialized string
-    if ...: # if top of hash is five zero. it's nice.
-      print("nonce: {}, hash: {},  number: {}".format(nonce, hash, get_number_of_0(hash)))
-      return block
+    # initialize nonce as random string 
+    nonce = get_nonce()
+    # initialize block contain txs and nocne
+    block = message_pb2.Block(
+      txs=txs,
+      nonce=nonce,
+      prev = previous_block_hash,
+      creator = addr
+      
+    )
+    # calucate hash from `block.SerializeToString()`. block.SerializeToString() is serialized string
+    hash = previous_block_hash
+    # if top of hash is five zero. it's nice.
+    if hash[:5]=='00000':
+          print("nonce: {}, hash: {},  number: {}".format(nonce, hash, get_number_of_0(hash)))
+          return block
 
     # This is only logs.
     if count % 100 == 0:
@@ -100,14 +112,16 @@ class MockBlockchianService(MockBlockchainServiceServicer):
       print("find!")
       resp = []
       # Add implement, send commited block to other nodes.
+      block_chain.save(block)
       # note. it requires Asynchronous. you should use ThreadPoolExecutor like this
       # -------
-      # executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
-      # resp.append(executor.submit(funcName(a, block)))
-      # for r in resp:
-      #   r.result()
+      for a in addrs:
+            if a!=addr:
+                  executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+                  resp.append(executor.submit(sendBlock(a, block)))
+      for r in resp:
+         r.result()
       # -------
-      ...
     else:
       print("stop mining because other node find nonce")
     
@@ -130,15 +144,21 @@ class MockBlockchianService(MockBlockchainServiceServicer):
       resp = []
       # Add implement, send un-commited block to other nodes.
       # note. it requires Asynchronous. you should use ThreadPoolExecutor like this
-      # -------
-      # executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
-      # resp.append(executor.submit(funcName(a, block)))
-      # for r in resp:
-      #   r.result()
-      # -------
+      
       cache = []
-    
+      for a in addrs:
+            if a!=addr:
+                  executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+                  resp.append(executor.submit(sendBlock(a, block)))
+                  
+    for r in resp:
+          r.result()
+      # -------
     return message_pb2.ShareResp(text="")
+  
+  def GetBlockChain(self, req, tcx):
+        blocks = block_chain.chain()
+        return message_pb2.BlockChain(block = blocks)
 
 def serve():
   server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

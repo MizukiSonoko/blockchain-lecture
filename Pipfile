@@ -8,6 +8,7 @@ protobuf = "*"
 grpcio-tools = "*"
 grpcio = "*"
 googleapis-common-protos = "*"
+google = "*"
 
 [dev-packages]
 
@@ -16,13 +17,10 @@ python_version = "3.9"
 
 [scripts]
 hello = "python sample.py"
-
 hash_test = "python hash/app.py"
 hash_sample = "python hash/sample.py" # for mizuki (^_^)
-
 sigs = "python sigs/app.py"
 sigs_sample = "python sigs/sample.py" # for mizuki (^_^)
-
 p2p_p1 = "python p2p/app.py localhost:50051"
 p2p_p2 = "python p2p/app.py localhost:50052"
 p2p_ignition = "python p2p/client.py"

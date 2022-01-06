@@ -11,27 +11,26 @@ class MockBlockchainServiceStub(object):
 
     def __init__(self, channel):
         """Constructor.
-
         Args:
             channel: A grpc.Channel.
         """
         self.ShareBlock = channel.unary_stream(
-                '/mock.MockBlockchainService/ShareBlock',
+                '/MockBlockchainService/ShareBlock',
                 request_serializer=message__pb2.Block.SerializeToString,
                 response_deserializer=message__pb2.ShareResp.FromString,
                 )
         self.CommitBlock = channel.unary_stream(
-                '/mock.MockBlockchainService/CommitBlock',
+                '/MockBlockchainService/CommitBlock',
                 request_serializer=message__pb2.Block.SerializeToString,
                 response_deserializer=message__pb2.ShareResp.FromString,
                 )
         self.SendTx = channel.unary_unary(
-                '/mock.MockBlockchainService/SendTx',
+                '/MockBlockchainService/SendTx',
                 request_serializer=message__pb2.Tx.SerializeToString,
                 response_deserializer=message__pb2.ShareResp.FromString,
                 )
         self.GetBlockChain = channel.unary_unary(
-                '/mock.MockBlockchainService/GetBlockChain',
+                '/MockBlockchainService/GetBlockChain',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=message__pb2.BlockChain.FromString,
                 )
@@ -70,26 +69,27 @@ def add_MockBlockchainServiceServicer_to_server(servicer, server):
             'ShareBlock': grpc.unary_stream_rpc_method_handler(
                     servicer.ShareBlock,
                     request_deserializer=message__pb2.Block.FromString,
-                    response_serializer=message__pb2.ShareResp.SerializeToString,
+                    response_serializer=message__pb2.ShareResp.SerializeToString(),
             ),
             'CommitBlock': grpc.unary_stream_rpc_method_handler(
                     servicer.CommitBlock,
                     request_deserializer=message__pb2.Block.FromString,
-                    response_serializer=message__pb2.ShareResp.SerializeToString,
+                    response_serializer=message__pb2.ShareResp.SerializeToString(),
             ),
             'SendTx': grpc.unary_unary_rpc_method_handler(
                     servicer.SendTx,
                     request_deserializer=message__pb2.Tx.FromString,
-                    response_serializer=message__pb2.ShareResp.SerializeToString,
+                    response_serializer=message__pb2.ShareResp.SerializeToString(),
             ),
             'GetBlockChain': grpc.unary_unary_rpc_method_handler(
                     servicer.GetBlockChain,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                    response_serializer=message__pb2.BlockChain.SerializeToString,
+                    response_serializer=message__pb2.BlockChain.SerializeToString(),
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'mock.MockBlockchainService', rpc_method_handlers)
+            #removed mock from mock.Mock...
+            'MockBlockchainService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -108,7 +108,7 @@ class MockBlockchainService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/mock.MockBlockchainService/ShareBlock',
+        return grpc.experimental.unary_stream(request, target, '/MockBlockchainService/ShareBlock',
             message__pb2.Block.SerializeToString,
             message__pb2.ShareResp.FromString,
             options, channel_credentials,
@@ -125,7 +125,7 @@ class MockBlockchainService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/mock.MockBlockchainService/CommitBlock',
+        return grpc.experimental.unary_stream(request, target, '/MockBlockchainService/CommitBlock',
             message__pb2.Block.SerializeToString,
             message__pb2.ShareResp.FromString,
             options, channel_credentials,
@@ -141,8 +141,8 @@ class MockBlockchainService(object):
             compression=None,
             wait_for_ready=None,
             timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mock.MockBlockchainService/SendTx',
+            metadata=None):   #removed /mock. from /mock.MockBloc....
+        return grpc.experimental.unary_unary(request, target, '/MockBlockchainService/SendTx',
             message__pb2.Tx.SerializeToString,
             message__pb2.ShareResp.FromString,
             options, channel_credentials,
@@ -159,8 +159,10 @@ class MockBlockchainService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mock.MockBlockchainService/GetBlockChain',
+        return grpc.experimental.unary_unary(request, target, '/MockBlockchainService/GetBlockChain',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             message__pb2.BlockChain.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+   
