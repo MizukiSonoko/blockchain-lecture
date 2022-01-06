@@ -83,8 +83,10 @@ def mining(txs):
       
     )
     # calucate hash from `block.SerializeToString()`. block.SerializeToString() is serialized string
-    hash = previous_block_hash
+    #hash = previous_block_hash
+    hash =hash_sha3_256(block.SerializeToString())
     # if top of hash is five zero. it's nice.
+    #if hash[:5]=='00000':
     if hash[:5]=='00000':
           print("nonce: {}, hash: {},  number: {}".format(nonce, hash, get_number_of_0(hash)))
           return block
@@ -132,7 +134,8 @@ class MockBlockchianService(MockBlockchainServiceServicer):
     yield message_pb2.ShareResp(text="")
     miningable = False
     # Add implement, save block to blockchain
-    ...
+    block_chain.save(req)
+    
 
   def SendTx(self, req, ctx): 
     global cache
@@ -158,7 +161,7 @@ class MockBlockchianService(MockBlockchainServiceServicer):
   
   def GetBlockChain(self, req, tcx):
         blocks = block_chain.chain()
-        return message_pb2.BlockChain(block = blocks)
+        return message_pb2.BlockChain( clock = blocks)
 
 def serve():
   server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

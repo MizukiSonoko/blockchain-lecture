@@ -69,22 +69,22 @@ def add_MockBlockchainServiceServicer_to_server(servicer, server):
             'ShareBlock': grpc.unary_stream_rpc_method_handler(
                     servicer.ShareBlock,
                     request_deserializer=message__pb2.Block.FromString,
-                    response_serializer=message__pb2.ShareResp.SerializeToString(),
+                    response_serializer=message__pb2.ShareResp.SerializeToString,
             ),
             'CommitBlock': grpc.unary_stream_rpc_method_handler(
                     servicer.CommitBlock,
                     request_deserializer=message__pb2.Block.FromString,
-                    response_serializer=message__pb2.ShareResp.SerializeToString(),
+                    response_serializer=message__pb2.ShareResp.SerializeToString,
             ),
             'SendTx': grpc.unary_unary_rpc_method_handler(
                     servicer.SendTx,
                     request_deserializer=message__pb2.Tx.FromString,
-                    response_serializer=message__pb2.ShareResp.SerializeToString(),
+                    response_serializer=message__pb2.ShareResp.SerializeToString,
             ),
             'GetBlockChain': grpc.unary_unary_rpc_method_handler(
                     servicer.GetBlockChain,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                    response_serializer=message__pb2.BlockChain.SerializeToString(),
+                    response_serializer=message__pb2.BlockChain.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
