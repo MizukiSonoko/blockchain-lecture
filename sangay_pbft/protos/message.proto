@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package pbft;
+
+message Tx {
+  string text = 1;
+  int32  count = 2;
+  string state = 3;
+  repeated string addrs = 4;
+}
+
+message ShareResp {
+  string text = 1;
+}
+
+service SampleService {
+  rpc Share (Tx) returns (ShareResp) {}
+}
+
